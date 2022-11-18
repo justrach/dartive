@@ -11,12 +11,12 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages).
 -->
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+A fast and easy server architecture for Dart. Seamlessly integrate with your existing codebase.
+Models can be used as a data layer for your application, or as a server for your Flutter app.
+
 
 ## Getting started
 
@@ -25,15 +25,34 @@ start using the package.
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+In order to run a RESTFUL server all you have to do is create a model and extend it with the `Model` class.
+and follow the following code and your server would be running on port 8080.
 
 ```dart
-const like = 'sample';
+void main(List<String> arguments) async{
+  Dartive.get('/', () {
+    print("This is running");
+    return 'return new';
+  });
+  
+
+  Dartive.post('/some.json', (Dartive api) async {
+    var  body = api.request;
+    // you have to change the way that the request is parsed. this can be done by using models
+    // or by using the request.body property
+    var x = json
+        .decode(body)
+        .map((data) => Root.fromJson(data))
+        .toList();
+    List<Root> streetsList = List<Root>.from(x);
+    print(streetsList);
+
+    return    streetsList[0];;
+  });
+  await Dartive.listen(host: '0.0.0.0', port: 8080);
+}
 ```
 
-## Additional information
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+
+# To add ORM support for post requests.

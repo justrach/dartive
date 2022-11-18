@@ -1,8 +1,8 @@
 name: dartive
-description: A new Flutter package project.
+description: Retain your existing Flutter code, and use Dartive to make it faster.
 version: 0.0.1
-homepage: "dartive.org"
-
+homepage: "https://dartive.dev"
+repository: "https://github.com/justrach/dartive"
 environment:
   sdk: '>=2.18.2 <3.0.0'
   flutter: ">=1.17.0"

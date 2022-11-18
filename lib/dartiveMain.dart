@@ -60,6 +60,7 @@ class Dartive {
   Map jsons = {};
 
   String get pathQuery => uri.path;
+   Map<String,String> get queryParameters => uri.queryParameters;
 
   Map<String, String> reqHeaders = {};
 
