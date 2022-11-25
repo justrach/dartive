@@ -26,7 +26,7 @@ void main(List<String> arguments) async{
       "PrivateCode": "5E",
       "Monitored": false,
       "OtherModes": ""
-    }
+    };
   });
   // Dartive.post('/some.json', (Dartive api) async {
   //   return ArgumentError('o');
