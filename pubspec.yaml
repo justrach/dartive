@@ -1,6 +1,6 @@
 name: dartive
 description: Retain your existing Flutter code, and use Dartive to make it faster.
-version: 0.0.6
+version: 0.1.0
 homepage: "https://dartive.dev"
 repository: "https://github.com/justrach/dartive"
 environment:
@@ -15,9 +15,8 @@ dependencies:
   mime: ^1.0.2
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
-  flutter_lints: ^2.0.0
+  test: any
+  http: any
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dartive/dartive.dart';
+import 'package:flutter/foundation.dart';
 
 import '../models/helloworld.dart';
 
@@ -40,9 +41,11 @@ void main(List<String> arguments) async{
         .map((data) => Root.fromJson(data))
         .toList();
    List<Root> streetsList = List<Root>.from(x);
-   print(streetsList);
+   if (kDebugMode) {
+     print(streetsList);
+   }
 
-        return    streetsList[0];;
+        return    streetsList[0];
   });
   await Dartive.listen(host: '0.0.0.0', port: 8080);
   }

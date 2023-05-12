@@ -1,15 +1,15 @@
 import 'dart:convert';
 
 import 'package:dartive/dartive.dart';
-import 'package:flutter/foundation.dart';
+
 
 import 'models/helloworld.dart';
 
 void main(List<String> arguments) async{
   Dartive.get('/', () {
-    if (kDebugMode) {
+   
       print("This is running");
-    }
+
   return {'return new'};
   });
 
@@ -45,7 +45,7 @@ void main(List<String> arguments) async{
    List<Root> streetsList = List<Root>.from(x);
    print(streetsList);
 
-        return    streetsList[0];;
+        return    streetsList[0];
   });
   await Dartive.listen(host: '0.0.0.0', port: 8080);
   }
