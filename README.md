@@ -69,6 +69,7 @@ FEBE simplifies this process by leveraging the capabilities of Dart and Flutter 
 # Dartive and Dartivemon
 FEBE integrates with Dartive, an ExpressJS-like wrapper for Dart backend, and Dartivemon, a tool that runs Dart and Flutter applications concurrently and watches for changes in your Dart application to automatically restart it.
 ## File Structure
+```bash
 root
 ├── example
 │   ├── flutter_app
@@ -76,7 +77,7 @@ root
 │   ├── app.dart (run with dartivemon app.dart)
 │   └── lib
 │       └── main.dart (runs with just dartivemon app.dart or flutter run)
-
+```
 # Running FEBE with Dartivemon
 To run your FEBE application with Dartivemon, use the command dartivemon be [nameofapp.dart]. This command runs the server on a specific folder.
 # Notes

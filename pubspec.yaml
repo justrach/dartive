@@ -1,6 +1,6 @@
 name: dartive
 description: Retain your existing Flutter code, and use Dartive to make it faster.
-version: 0.1.0
+version: 0.1.1
 homepage: "https://dartive.dev"
 repository: "https://github.com/justrach/dartive"
 environment:
