@@ -1,4 +1,4 @@
-## 0.1.0
+## 0.1.1
 
 * Added support for 'dartivemon' commands to run the Dart and Flutter apps.
 * Added '/busInformation' GET endpoint which returns bus information in JSON format. to show how it works
