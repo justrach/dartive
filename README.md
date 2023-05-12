@@ -54,15 +54,15 @@ To run Dartive with Dartivemon, use the command `dartivemon be [nameofapp.dart]`
 
 # Recommended File Structure(FeBe)
 
-# What is FeBe?
+## What is FeBe?
 FEBE (FrontEnd BackEnd) is a unified framework that simplifies development across multiple platforms - iOS, Android, Web (WASM), Linux, and Windows - using Dart and Flutter. By structuring your project according to the FEBE framework, you can maintain a single code base for both the backend and frontend, reducing redundancy and improving maintainability.
 
 
-# Single Source of Truth for Models
+## Single Source of Truth for Models
 One of the core benefits of the FEBE framework is that it eliminates the need to maintain separate models for the backend and frontend. Traditionally, you might define one set of models for your backend, and another set for your frontend, duplicating effort and introducing potential inconsistencies.
 
 FEBE solves this by enabling you to define your data models once and use them across your entire app. This not only reduces the amount of code you have to write, but also ensures consistency and accuracy across your application.
-# Multiplatform Development
+## Multiplatform Development
 Developing applications that run on multiple platforms (iOS, Android, Web, Linux, Windows) has traditionally been a complex and time-consuming process, often requiring separate code bases for each platform.
 
 FEBE simplifies this process by leveraging the capabilities of Dart and Flutter to build multiplatform apps from a single code base. This means you can write your code once, and then compile and deploy it across all supported platforms, saving time and effort.
