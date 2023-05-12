@@ -1,18 +1,15 @@
 import 'dart:convert';
 
 import 'package:dartive/dartive.dart';
-import 'package:flutter/foundation.dart';
 
-import 'models/helloworld.dart';
+import '../models/helloworld.dart';
 
 void main(List<String> arguments) async{
   Dartive.get('/', () {
-    if (kDebugMode) {
-      print("This is running");
-    }
-  return {'return new'};
+    print("This is running");
+  return 'return new';
   });
-
+// added new items
 
   Dartive.get('/busInformation', () {
 
@@ -27,7 +24,7 @@ void main(List<String> arguments) async{
       "WebSite": null,
       "PrimaryMode": "other",
       "PrivateCode": "5E",
-      "Monitored": false,
+      "Monitored": true,
       "OtherModes": ""
     };
   });
