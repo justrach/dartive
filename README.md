@@ -2,7 +2,7 @@
 Dartive is an ExpressJS-like wrapper for Dart backend, simplifying the process of defining routes and handling HTTP requests.
 
 # Features
-* **Route Handling**: Define GET and POST routes easily and intuitively.
+* **Route Handling**: Define GET , POST, PUT , DELETE and other routes easily and intuitively.
 * **Request Parsing**: Parse incoming request bodies using built-in JSON decoding and custom data models.
 * **Server Configuration**: Customize your server host and port with a single line of code.
 
