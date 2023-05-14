@@ -26,7 +26,7 @@ Future<void> runDartApp() async {
 
   // Listen for changes in app.dart and restart the process if any
   File('app.dart').watch().listen((event) async {
-    await dartProcess?.kill();
+    dartProcess?.kill();
     dartProcess = await Process.start('dart', ['app.dart']);
     _redirectOutput(dartProcess!);
   });
@@ -38,8 +38,8 @@ Future<void> runFlutterApp() async {
 }
 
 void _redirectOutput(Process process) {
-  process.stdout.transform(SystemEncoding().decoder).listen(print);
-  process.stderr.transform(SystemEncoding().decoder).listen(print);
+  process.stdout.transform(const SystemEncoding().decoder).listen(print);
+  process.stderr.transform(const SystemEncoding().decoder).listen(print);
 }
 
 void _sendToFlutterProcess(String input) {
