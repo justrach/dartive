@@ -16,6 +16,9 @@ dependencies:
 ```
 Then, run `dart pub get` to fetch the package.
 
+[![pub package](https://img.shields.io/pub/v/dartive.svg)](https://pub.dev/packages/dartive)
+
+
 # Usage
 ## Basic Usage
 ```dart
