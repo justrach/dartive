@@ -1,3 +1,6 @@
+## 0.1.3
+* Removed `flutter` as a dependency, thanks leslie!
+
 ## 0.1.2
 
 * Added support for 'dartivemon' commands to run the Dart and Flutter apps.
