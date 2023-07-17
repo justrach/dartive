@@ -1,6 +1,6 @@
 part of 'dartiveAid.dart';
 
-extension AlmExtensionList<E> on List<E> {
+extension ExtensionList<E> on List<E> {
   int get size => isEmptyOrNull ? 0 : this.length;
   int get randomIndex => Random().nextInt(size);
 

@@ -1,6 +1,6 @@
 part of 'dartiveAid.dart';
 
-extension AlmExtensionMap on Map {
+extension ExtendedMap on Map {
   int get size => isEmptyOrNull ? 0 : this.length;
 
   bool get isSuccess => has('status', 1) || has('code', 1) || has('result', 'success');
