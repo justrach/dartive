@@ -1,8 +1,6 @@
-import 'dart:convert';
-
 import 'package:dartive/dartive.dart';
 
-import 'models/helloworld.dart';
+
 
 void main(List<String> arguments) async {
   Dartive.get('/', () {
@@ -51,16 +49,6 @@ void main(List<String> arguments) async {
     };
   });
   
-  Dartive.post('/some.json', (Dartive api) async {
-    var body = api.request;
-    // you have to change the way that the request is parsed. this can be done by using models
-    // or by using the request.body property
-    var x = json.decode(body).map((data) => Root.fromJson(data)).toList();
-    List<Root> streetsList = List<Root>.from(x);
-    print(streetsList);
-
-    return streetsList[0];
-  });
   // comment
   await Dartive.listen(host: '0.0.0.0', port: 8000);
 }
