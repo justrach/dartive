@@ -1,6 +1,6 @@
 part of 'dartiveAid.dart';
 
-extension AlmExtensionObject on Object? {
+extension ExtensionObject on Object? {
   bool get isNull => this == null;
   String get TAG => this == null ? 'null' : this!.runtimeType.toString();
 
@@ -34,7 +34,7 @@ extension AlmExtensionObject on Object? {
   }
 }
 
-extension AlmExtensionObjectN on Object {
+extension ExtensionObjectN on Object {
   String enJson() {
     Object o = this;
     if (o is String) return o;
