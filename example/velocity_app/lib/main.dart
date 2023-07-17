@@ -1,4 +1,4 @@
-// this is a local terminal app to demonstrate that you can use dartive to create a terminal app! and run it locally, the main repository for this would be at https://github.com/justrach/velocity 
+// this is a local terminal app to demonstrate that you can use dartive to create a terminal app! and run it locally, the main repository for this would be at https://github.com/justrach/velocity
 
 //TODO: A
 
@@ -6,12 +6,16 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:dartive/dartive.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:velocity_app/models/Hello.dart';
 
 Future<void> main() async {
   runApp(const VelocityDart());
   Dartive.post('/', (Dartive api) async {
     var body = api.request;
     return body;
+  });
+  Dartive.get('/', (Dartive api) async {
+    return {Root:"World"};
   });
   await Dartive.listen(host: '0.0.0.0', port: 8080);
 }
@@ -37,7 +41,7 @@ class TerminalHomePage extends StatefulWidget {
   final String title;
 
   @override
-  TerminalHomePageState createState() => TerminalHomePageState(); 
+  TerminalHomePageState createState() => TerminalHomePageState();
 }
 
 class TerminalHomePageState extends State<TerminalHomePage> {

@@ -219,8 +219,7 @@ class Dartive {
 
   static Map<String, dynamic> routeMap = {};
   static Map<String, String> get resHeaders => {
-    'Server': 'DartRestful $version',
-    'Server-Pub': 'https://pub.dev/packages/restful',
+    'Server': 'Dartive $version',
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': '*',
     'Access-Control-Allow-Headers': '*',
