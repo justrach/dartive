@@ -1,5 +1,11 @@
 /// TODO a mongo ORM for simple CRUD functionality.
 
-void main(){
-   print("Hello World");
+
+
+class DartiveMongo {
+  static String todo = "Hello World!";
+
+
+  static void find(query, projection, [options]) => todo;
+
 }
