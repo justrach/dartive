@@ -13,6 +13,7 @@ void main(List<String> arguments) async {
 
   Dartive.post('/test', (Dartive api) async {
     var body = api.request;
+
     return body;
   });
 
@@ -27,11 +28,9 @@ void main(List<String> arguments) async {
 
   Dartive.delete('/delete', () {
     return {'deleted item'};
-  
   });
-    Dartive.get('/delete', () {
+  Dartive.get('/delete', () {
     return {'get deleted  item'};
-  
   });
 
   Dartive.get('/busInformation', () {
@@ -50,7 +49,7 @@ void main(List<String> arguments) async {
       "OtherModes": ""
     };
   });
-  
+
   Dartive.post('/some.json', (Dartive api) async {
     var body = api.request;
     // you have to change the way that the request is parsed. this can be done by using models
