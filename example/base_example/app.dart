@@ -1,5 +1,4 @@
 import 'package:dartive/dartive.dart';
-import 'package:dartive/dartiveMongo.dart';
 
 
 
@@ -47,13 +46,6 @@ void main(List<String> arguments) async {
       "PrivateCode": "5E",
       "Monitored": false,
       "OtherModes": ""
-    };
-  });
-
-  DartiveMongo.find({'name': 'Tom', 'rating': {r'$gt': 10}}, "name, friends", () async {
-    return {
-      "name": "Tom",
-      "friends": {"John", "Jane"}
     };
   });
   
