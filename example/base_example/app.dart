@@ -6,7 +6,7 @@ void main(List<String> arguments) async {
   Dartive.get('/', () {
     print("This is running");
 
-    return {'frig  you'};
+    return {'Hello World'};
   });
 
   Dartive.post('/test', (Dartive api) async {
