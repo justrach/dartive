@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:isolate';
 import 'package:dartive/src/dartiveAid.dart';
 import 'package:mime/mime.dart';
 class Dartive {
@@ -10,7 +11,11 @@ class Dartive {
 
   // String get token =>
       // jsons.tryTo<Map>().get<String>('token') ?? req.headers.value('token');
-
+ static Future<Isolate> spawnIsolate(FutureOr<void> Function(SendPort sendPort) entryPoint) async {
+    final receivePort = ReceivePort();
+    final isolate = await Isolate.spawn(entryPoint, receivePort.sendPort);
+    return isolate;
+  }
   static Map success(dynamic s, {dynamic msg = 'success'}) =>
       {'msg': msg, 'code': 1, 'result': s};
 
