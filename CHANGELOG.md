@@ -1,3 +1,11 @@
+## 0.2.4
+* Added `isolates` for multithreading, hello multi-CPU performance!
+* Fixed issues with wrapper wrt(1)
+
+## 0.2.0
+* Added `isolates` for multithreading, hello multi-CPU performance!
+
+
 ## 0.1.3
 * Removed `flutter` as a dependency, thanks leslie!
 

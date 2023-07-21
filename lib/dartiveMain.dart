@@ -11,15 +11,9 @@ class Dartive {
 
   // String get token =>
       // jsons.tryTo<Map>().get<String>('token') ?? req.headers.value('token');
-  static Future<Isolate> spawnIsolate(FutureOr<void> Function() entryPoint) async {
+ static Future<Isolate> spawnIsolate(FutureOr<void> Function(SendPort sendPort) entryPoint) async {
     final receivePort = ReceivePort();
-
-    // Define a wrapper function
-    void entryPointWrapper(SendPort sendPort) {
-      entryPoint(); // Execute the entry point
-    }
-
-    final isolate = await Isolate.spawn(entryPointWrapper, receivePort.sendPort);
+    final isolate = await Isolate.spawn(entryPoint, receivePort.sendPort);
     return isolate;
   }
   static Map success(dynamic s, {dynamic msg = 'success'}) =>

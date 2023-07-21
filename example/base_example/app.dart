@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dartive/dartive.dart';
 import 'dart:isolate';
 
@@ -51,7 +53,11 @@ Future<List> findPrimes2() async {
 
   // Print the primes.
 }
-
+Future<Isolate> spawnIsolate(FutureOr<void> Function(SendPort sendPort) entryPoint) async {
+  final receivePort = ReceivePort();
+  final isolate = await Isolate.spawn(entryPoint, receivePort.sendPort);
+  return Future.value(isolate);
+}
 void main(List<String> arguments) async {
   Dartive.get('/heavy-computation', (Dartive api) async {
     // Create a receive port to receive messages from the isolate.
@@ -61,16 +67,16 @@ void main(List<String> arguments) async {
     // so the isolate can send messages back.
     await Isolate.spawn(findPrimes, receivePort.sendPort);
     List<int> primes = await receivePort.first;
+    print(primes);
     // Wait for the result from the isolate.
 
     // Return the result.
-    return primes;
+    return {"primes"};
   });
   Dartive.get('/', () async {
-    // var x  = await findPrimes2();
     print("This is running");
 
-    return {"Hello World"};
+    return {"Hello World "};
   });
 
   Dartive.post('/test', (Dartive api) async {
