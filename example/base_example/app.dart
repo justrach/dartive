@@ -87,7 +87,7 @@ void main(List<String> arguments) async {
 
   Dartive.post('/newpage', (Dartive api) async {
     var body = api.request;
-    body.json();
+    
     // add another field to body
     List<String> items = body.split('');
     items.add("newitem");

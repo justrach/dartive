@@ -1,6 +1,7 @@
-## 0.2.4
+## 0.2.7
 * Added `isolates` for multithreading, hello multi-CPU performance!
 * Fixed issues with wrapper wrt(1)
+* Added `.json()` method because it broke with the previous update for some reason
 
 ## 0.2.0
 * Added `isolates` for multithreading, hello multi-CPU performance!
