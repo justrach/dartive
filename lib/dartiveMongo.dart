@@ -1,8 +1,7 @@
-/// TODO a mongo ORM for simple CRUD functionality.
+/// A mongo ORM for simple CRUD functionality that follows the same syntax as MongoNodeJs driver.
 import 'package:mongo_dart/mongo_dart.dart';
 import 'package:dartive/dartive.dart';
-
-
+export 'package:mongo_dart/mongo_dart.dart';
 
 
 class DartiveMongo {
@@ -41,7 +40,8 @@ class DartiveMongo {
   Future<void> close() async => await (await _db).close();
 }
 
-
+// TODO: improve all the querys to resemble nodeJS driver syntax
+// What the hell is selector builder
 class DartiveCollection {
 
   late DbCollection _collection;
@@ -51,12 +51,12 @@ class DartiveCollection {
   }
 
 
-  Future<Map<String, dynamic>?> findOne([selector]) {
-    return _collection.findOne(selector);
+  Future<Map<String, dynamic>?> findOne([query]) {
+    return _collection.findOne(query);
   }
 
-  Future<Map<String, dynamic>> remove(selector, {WriteConcern? writeConcern}) {
-    return _collection.remove(selector, writeConcern: writeConcern);
+  Future<Map<String, dynamic>> remove(query, {WriteConcern? writeConcern}) {
+    return _collection.remove(query, writeConcern: writeConcern);
   }
 
   Future<Map<String, dynamic>> insertOne(Map<String, dynamic> document) async {
