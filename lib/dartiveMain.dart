@@ -408,7 +408,7 @@ class Dartive {
   /// The first optional parameter, [object] will be the message <br>
   /// The Second optional parameter, [level] will be the log level, e.g Debug, Error, Info..., default value is 'I'
   static Function([dynamic, dynamic]) logger =
-      ([object, level = 'I']) async => print('${DartiveAids.timeId()}: Type: [$level] | Info: $object');
+    ([object, level = 'I']) async => print('${DartiveAids.timeId()}: Type: [$level] | Info: $object');
 
 
   bool _closed = false;
