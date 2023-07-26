@@ -51,13 +51,18 @@ class DartiveCollection {
   }
 
 
+///--------------------------------------------Find--------------------------------------------
+
   Future<Map<String, dynamic>?> findOne([query]) {
     return _collection.findOne(query);
   }
 
-  Future<Map<String, dynamic>> remove(query, {WriteConcern? writeConcern}) {
-    return _collection.remove(query, writeConcern: writeConcern);
+  Stream<Map<String, dynamic>> find([selector]) {
+    return _collection.find(selector);
   }
+
+
+///--------------------------------------------Insert--------------------------------------------
 
   Future<Map<String, dynamic>> insertOne(Map<String, dynamic> document) async {
     return await _collection.insert(document);
@@ -67,6 +72,95 @@ class DartiveCollection {
     return await _collection.insertMany(documents);
   }
 
+  Future<Map<String, dynamic>> insertAll(List<Map<String, dynamic>> documents, {WriteConcern? writeConcern}) async {
+    return await _collection.insertAll(documents, writeConcern: writeConcern);
+  }
 
-  static void find(query, projection, [options]) => null;
+  ///--------------------------------------------Delete--------------------------------------------
+  
+  Future<WriteResult> deleteOne(selector,
+      {WriteConcern? writeConcern,
+      CollationOptions? collation,
+      String? hint,
+      Map<String, Object>? hintDocument}) {
+    return _collection.deleteOne(selector,
+        writeConcern: writeConcern,
+        collation: collation,
+        hint: hint,
+        hintDocument: hintDocument);
+  }
+  
+  Future<Map<String, dynamic>> deleteMany(query, {WriteConcern? writeConcern}) {
+    return _collection.remove(query, writeConcern: writeConcern);
+  }
+  ///--------------------------------------------Update & Replace--------------------------------------------
+  
+  Future<WriteResult> updateOne(selector, update,
+      {bool? upsert,
+      WriteConcern? writeConcern,
+      CollationOptions? collation,
+      List<dynamic>? arrayFilters,
+      String? hint,
+      Map<String, Object>? hintDocument}) async {
+    return _collection.updateOne(selector, update,
+        upsert: upsert,
+        writeConcern: writeConcern,
+        collation: collation,
+        arrayFilters: arrayFilters,
+        hint: hint,
+        hintDocument: hintDocument);
+  }
+
+
+  Future<Map<String, dynamic>> updateMany(selector, document,
+      {bool upsert = false,
+      bool multiUpdate = true,
+      WriteConcern? writeConcern}) async {
+    return _collection.update(selector, document,
+        upsert: upsert, multiUpdate: multiUpdate, writeConcern: writeConcern);
+  }
+
+  /// Universal update and replace function, can achieve updateOne, updateMany and replace depending on arguments passed to it.
+  Future<Map<String, dynamic>> update(selector, document,
+      {bool upsert = false,
+      bool multiUpdate = true,
+      WriteConcern? writeConcern}) async {
+    return _collection.update(selector, document,
+        upsert: upsert, multiUpdate: multiUpdate, writeConcern: writeConcern);
+  }
+
+  Future<Map<String, dynamic>?> findAndModify(
+      {query,
+      sort,
+      bool? remove,
+      update,
+      bool? returnNew,
+      fields,
+      bool? upsert}) async {
+    return _collection.findAndModify(
+        query: query,
+        sort: sort,
+        remove: remove,
+        update: update,
+        returnNew: returnNew,
+        fields: fields,
+        upsert: upsert);
+  }
+
+  Future<WriteResult> replaceOne(selector, Map<String, dynamic> update,
+      {bool? upsert,
+      WriteConcern? writeConcern,
+      CollationOptions? collation,
+      String? hint,
+      Map<String, Object>? hintDocument}) {
+    return _collection.replaceOne(selector, update,
+        upsert: upsert,
+        writeConcern: writeConcern,
+        collation: collation,
+        hint: hint,
+        hintDocument: hintDocument);
+  }
+
+  // TODO findOneAndReplace
+
 }
