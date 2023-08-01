@@ -25,6 +25,9 @@ extension DartiveAidsExtensionDateTime on DateTime {
     s = s.replaceAll('${fx}h', date.hour.digits(2));
     s = s.replaceAll('${fx}i', date.minute.digits(2));
     s = s.replaceAll('${fx}s', date.second.digits(2));
+    if (date.isUtc) {
+      s = [s, 'Z'].join();
+    }
     return s;
   }
 

@@ -404,9 +404,12 @@ class Dartive {
   static String json(dynamic input) =>
       jsonEncode(input, toEncodable: (o) => o.toString());
 
-  ///user can customize this function for db or any file to output the log message
+  /// User can customize this function for db or any file to output the log message <br>
+  /// The first optional parameter, [object] will be the message <br>
+  /// The Second optional parameter, [level] will be the log level, e.g Debug, Error, Info..., default value is 'I'
   static Function([dynamic, dynamic]) logger =
-      ([o, l = 'I']) async => print('${DartiveAids.timeId()} $l[] Api $o');
+    ([object, level = 'I']) async => print('${DartiveAids.timeId()}: Type: [$level] | Info: $object');
+
 
   bool _closed = false;
 

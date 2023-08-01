@@ -127,10 +127,15 @@ class DartiveAids {
     return date.toFormat(format: s, fx: fx);
   }
 
-  /// Generates a time-based ID using y-m-d h:i:s format.
-  /// Example output: 2023-07-11-14:30:00-{random_string}
+  /// Generates a time-based ID using y-m-d h:i:s ISO 8601 format.
+  /// Example output: 2023-07-11T14:30:00Z-{random_string/input}
 
-  static String timeId([dynamic input, String jo = '-']) => [format('ymd'), format('his'), input ?? nextString(10)].join(jo).toUpperCase();
+  static String timeId([dynamic input, String jo = '-']) {
+    String time = [format('y-m-d'), format('h:i:s')].join('T');
+    time = [time, input ?? nextString(10)].join(jo).toUpperCase();
+
+    return time;
+  } 
 
   ///
   ///=========================== Token ===========================
