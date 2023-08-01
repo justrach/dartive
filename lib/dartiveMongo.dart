@@ -1,13 +1,13 @@
-/// A mongo ORM for simple CRUD functionality that follows the same syntax as MongoNodeJs driver.
 import 'package:mongo_dart/mongo_dart.dart';
 import 'package:dartive/dartive.dart';
 export 'package:mongo_dart/mongo_dart.dart';
 
+/// A mongo ORM for simple CRUD functionality that follows the same syntax as MongoNodeJs driver. <br>
+/// Note that this is a wrapper and not an extension, hence it will incur some overhead and performance hits.
 
 class DartiveMongo {
   /// Private constructor to create a DartiveMongo wrapper around mongo_dart's Db class
   final Db _db;
-  // DartiveMongo(String uri): _db = Db(uri);
   DartiveMongo._(this._db);
   
 
@@ -50,11 +50,25 @@ class DartiveCollection {
     _collection = _db.collection(collectionName);
   }
 
+  Future<bool> drop() {
+    return _collection.drop();
+  }
 
 ///--------------------------------------------Find--------------------------------------------
 
-  Future<Map<String, dynamic>?> findOne([query]) {
-    return _collection.findOne(query);
+  /// findOne method allows mongo_dart selector as well as NodeJS driver format of filter, projection.
+  Future<Map<String, dynamic>?> findOne([query, projection]) {
+    if (query is Map<String, dynamic> && projection == null) {
+      return _collection.findOne(query);
+    } else if (query is SelectorBuilder && projection == null) {
+      return _collection.findOne(query);
+    } else if (query != null && projection != null) {
+      var res = _collection.findOne(query);
+      // return 
+    }
+
+    throw Dartive.logger('Invalid query format, please follow the correct format', 'E');
+    
   }
 
   Stream<Map<String, dynamic>> find([selector]) {
