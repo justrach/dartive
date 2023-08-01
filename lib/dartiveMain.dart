@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:isolate';
 import 'package:dartive/src/dartiveAid.dart';
 import 'package:mime/mime.dart';
 class Dartive {
@@ -10,7 +11,11 @@ class Dartive {
 
   // String get token =>
       // jsons.tryTo<Map>().get<String>('token') ?? req.headers.value('token');
-
+ static Future<Isolate> spawnIsolate(FutureOr<void> Function(SendPort sendPort) entryPoint) async {
+    final receivePort = ReceivePort();
+    final isolate = await Isolate.spawn(entryPoint, receivePort.sendPort);
+    return isolate;
+  }
   static Map success(dynamic s, {dynamic msg = 'success'}) =>
       {'msg': msg, 'code': 1, 'result': s};
 
@@ -27,6 +32,8 @@ class Dartive {
 
   HttpRequest req;
 
+  /// Getters
+
   bool get isPost => method == 'POST';
 
   bool get isGet => method == 'GET';
@@ -42,6 +49,8 @@ class Dartive {
   ContentType? get type => req.headers.contentType;
 
   HttpResponse get res => req.response;
+
+  /// Get boundary for multi-part processing
 
   String? get boundary => (type != null && type?.parameters != null)
       ? type?.parameters['boundary']
@@ -181,7 +190,7 @@ class Dartive {
     res.write(input);
   }
 
-  ///user can extend this method
+  /// User can extend this method
   Future<Object> callable(dynamic call) async {
     if (call is Function()) {
       return await call();
@@ -217,6 +226,11 @@ class Dartive {
 
   static void option(pattern, func) => route('option', pattern, func);
 
+  /// A two-dimensional map that holds all created routes in the form of {}. <br>
+  /// The outer keys of routeMap are of type [String] and represent the request method. <br>
+  /// The inner keys of routeMap are of type [dynamic] and represent the URI pattern for the route. <br>
+  /// The inner value of routeMap contains the function handler of the route
+
   static Map<String, dynamic> routeMap = {};
   static Map<String, String> get resHeaders => {
     'Server': 'Dartive $version',
@@ -235,7 +249,7 @@ class Dartive {
     routeMap[method][pattern] = func;
   }
 
-  ///route matcher
+  /// route matcher
   static dynamic _matcher;
 
   static Object matcher(Function(Uri) func) => _matcher = func;
@@ -244,11 +258,17 @@ class Dartive {
   //   ///todo
   // }
 
+
+  /// Matches the method and URI request provided to an existing route in routeMap. <br>
+  /// Returns the handler function associated with the route.
+
   static Object match(String method, Uri uri) {
     var pathQuery = uri.path;
     dynamic next;
 
-    ///find matcher if has
+    /// find a matcher function if it exists and call it on the uri provided. <br>
+    /// if matcher(uri) returns a route, return the route. <br>
+    /// else first look for auto-routes and lastly static routes. <br>
     if (_matcher != null) {
       next = _matcher(uri);
       if (next != null) return next;
@@ -263,12 +283,12 @@ class Dartive {
       return null;
     }
 
-    ///find auto routes
+    /// find automatic routes
     dynamic routes = Map.from(routeMap[autoKey] ?? {});
     next = routeFind(routes);
     if (next != null) return next;
 
-    ///find static
+    /// find static routes based on request method
     routes = Map.from(routeMap[method.toUpperCase()] ?? {});
     next = routeFind(routes);
     if (next != null) return next;
@@ -276,7 +296,7 @@ class Dartive {
     return Dartive.error('Not found pathQuery: "${pathQuery}" with method:$method');
   }
 
-  ///post parser
+  /// post parser for Forms, XForms and JSON
   Future<void> parsePost() async {
     if (isForm) {
       var maps = await parseForms()?.toList();
@@ -336,7 +356,7 @@ class Dartive {
     return jsons;
   }
 
-  ///example {name: foo, val: Instance of '_MimeMultipart'}
+  /// Returns eg. ```{name: foo, val: Instance of '_MimeMultipart'}```
   Stream<Map>? parseForms() {
     if (boundary == null) return null;
     return MimeMultipartTransformer(boundary!).bind(req).map((event) {
@@ -384,9 +404,12 @@ class Dartive {
   static String json(dynamic input) =>
       jsonEncode(input, toEncodable: (o) => o.toString());
 
-  ///user can customize this function for db or any file to output the log message
+  /// User can customize this function for db or any file to output the log message <br>
+  /// The first optional parameter, [object] will be the message <br>
+  /// The Second optional parameter, [level] will be the log level, e.g Debug, Error, Info..., default value is 'I'
   static Function([dynamic, dynamic]) logger =
-      ([o, l = 'I']) async => print('${DartiveAids.timeId()} $l[] Api $o');
+    ([object, level = 'I']) async => print('${DartiveAids.timeId()}: Type: [$level] | Info: $object');
+
 
   bool _closed = false;
 
