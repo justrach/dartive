@@ -86,7 +86,7 @@ class DartiveCollection {
     var result = await _collection.legacyFindOne(query);
     Map<String, dynamic> res = {};
     projection.forEach((field, value) {
-      if (value == 0) {
+      if (value == 1) {
         res[field] = result?[field];
       }
     });
