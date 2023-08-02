@@ -1,6 +1,7 @@
 import 'package:mongo_dart/mongo_dart.dart';
 import 'package:dartive/dartive.dart';
-export 'package:mongo_dart/mongo_dart.dart';
+// export 'package:mongo_dart/mongo_dart.dart';
+export 'package:mongo_dart_query/mongo_dart_query.dart';
 
 /// A mongo ORM for simple CRUD functionality that follows the same syntax as MongoNodeJs driver. <br>
 /// Note that this is a wrapper and not an extension, hence it will incur some overhead and performance hits.
@@ -10,9 +11,12 @@ class DartiveMongo {
   final Db _db;
   DartiveMongo._(this._db);
   
+  /// Getters
+  bool get modernMongo => _db.masterConnection.serverCapabilities.supportsOpMsg;
 
   /// Public factory constructor that <br>
   /// creates a mongoDB client and is able to handle connection for both standard format and DNS seedlist (SRV) format.
+  /// TODO: provide support for using mongoDart directly
   static Future<DartiveMongo> client(String uriString, [bool useMongoDart = false]) async {
     try {
       final db = await Db.create(uriString);
@@ -32,7 +36,7 @@ class DartiveMongo {
 
   /// Finds the mongoDB collection specified
   DartiveCollection collection(String collectionName) {
-    return DartiveCollection(_db, collectionName);
+    return DartiveCollection(_db, collectionName, this);
   }
   
 
@@ -41,12 +45,12 @@ class DartiveMongo {
 }
 
 // TODO: improve all the querys to resemble nodeJS driver syntax
-// What the hell is selector builder
-class DartiveCollection {
 
+class DartiveCollection {
+  final DartiveMongo _dartiveMongo;
   late DbCollection _collection;
 
-  DartiveCollection(Db _db, String collectionName) {
+  DartiveCollection(Db _db, String collectionName, this._dartiveMongo) {
     _collection = _db.collection(collectionName);
   }
 
@@ -57,14 +61,17 @@ class DartiveCollection {
 ///--------------------------------------------Find--------------------------------------------
 
   /// findOne method allows mongo_dart selector as well as NodeJS driver format of filter, projection.
-  Future<Map<String, dynamic>?> findOne([query, projection]) {
-    if (query is Map<String, dynamic> && projection == null) {
-      return _collection.findOne(query);
-    } else if (query is SelectorBuilder && projection == null) {
+  Future<Map<String, dynamic>?> findOne([dynamic query, dynamic projection]) {
+    if (query != null && projection == null) {
       return _collection.findOne(query);
     } else if (query != null && projection != null) {
-      var res = _collection.findOne(query);
-      // return 
+      if (_dartiveMongo.modernMongo) {
+      return _collection.modernFindOne(filter: query, projection: projection);
+      } else {
+        return legacyFinder(query, projection);
+      }
+    } else if (query is SelectorBuilder && projection != null) {
+      throw Dartive.logger('Please use .fields chaining method for projections with SelectorBuilders', 'E');
     }
 
     throw Dartive.logger('Invalid query format, please follow the correct format', 'E');
@@ -73,6 +80,17 @@ class DartiveCollection {
 
   Stream<Map<String, dynamic>> find([selector]) {
     return _collection.find(selector);
+  }
+
+  Future<Map<String, dynamic>?> legacyFinder([dynamic query, dynamic projection]) async {
+    var result = await _collection.legacyFindOne(query);
+    Map<String, dynamic> res = {};
+    projection.forEach((field, value) {
+      if (value == 0) {
+        res[field] = result?[field];
+      }
+    });
+    return res;
   }
 
 
